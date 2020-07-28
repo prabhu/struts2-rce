@@ -19,17 +19,12 @@ steps:
     jdkArchitectureOption: 'x64'
     publishJUnitResults: false
     goals: 'compile'
-- task: UsePythonVersion@0
-  inputs:
-    versionSpec: '3.x'
-    addToPath: true
-    architecture: 'x64'
 - task: Bash@3
   displayName: ShiftLeft cli scan
   inputs:
     targetType: 'inline'
     script: |
-      wget https://github.com/ShiftLeftSecurity/sast-scan/releases/download/v1.0.8-test/scan -O $(Build.ArtifactStagingDirectory)/scan
+      wget https://github.com/ShiftLeftSecurity/sast-scan/releases/download/v1.0.9-test/scan -O $(Build.ArtifactStagingDirectory)/scan
       chmod +x $(Build.ArtifactStagingDirectory)/scan
       $(Build.ArtifactStagingDirectory)/scan -t java,depscan -o $(Build.ArtifactStagingDirectory)/CodeAnalysisLogs
       # sh <(curl https://slscan.sh/install)
