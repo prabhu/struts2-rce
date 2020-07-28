@@ -7,7 +7,7 @@ trigger:
 - master
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: 'ubuntu-20.04'
 
 steps:
 - task: Maven@3
@@ -24,13 +24,8 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      echo $PYTHONPATH
-      echo $PATH
-      wget https://github.com/ShiftLeftSecurity/sast-scan/releases/download/v1.0.10-test/scan -O $(Build.ArtifactStagingDirectory)/scan
-      chmod +x $(Build.ArtifactStagingDirectory)/scan
-      $(Build.ArtifactStagingDirectory)/scan -t java,depscan -o $(Build.ArtifactStagingDirectory)/CodeAnalysisLogs
-      # sh <(curl https://slscan.sh/install)
-      # $HOME/.local/bin/scan -t java,depscan -o $(Build.ArtifactStagingDirectory)/CodeAnalysisLogs
+      sh <(curl https://slscan.sh/install)
+      $HOME/.local/bin/scan -t java,depscan -o $(Build.ArtifactStagingDirectory)/CodeAnalysisLogs
   env:
     WORKSPACE: https://github.com/prabhu/struts2-rce/blob/$(Build.SourceVersion)
     SCAN_DEBUG_MODE: debug
@@ -41,4 +36,3 @@ steps:
     PathtoPublish: "$(Build.ArtifactStagingDirectory)/CodeAnalysisLogs"
     ArtifactName: "CodeAnalysisLogs"
     publishLocation: "Container"
-
