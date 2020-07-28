@@ -25,8 +25,11 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      sh <(curl https://slscan.sh/install)
-      $HOME/.local/bin/scan -t java,depscan -o $(Build.ArtifactStagingDirectory)/CodeAnalysisLogs
+      wget https://github.com/ShiftLeftSecurity/sast-scan/releases/download/v1.0.8-test/scan -O $(Build.ArtifactStagingDirectory)/scan
+      chmod +x $(Build.ArtifactStagingDirectory)/scan
+      $(Build.ArtifactStagingDirectory)/scan -t java,depscan -o $(Build.ArtifactStagingDirectory)/CodeAnalysisLogs
+      # sh <(curl https://slscan.sh/install)
+      # $HOME/.local/bin/scan -t java,depscan -o $(Build.ArtifactStagingDirectory)/CodeAnalysisLogs
   env:
     WORKSPACE: https://github.com/prabhu/struts2-rce/blob/$(Build.SourceVersion)
     SCAN_DEBUG_MODE: debug
