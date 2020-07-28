@@ -26,7 +26,7 @@ steps:
     targetType: 'inline'
     script: |
       sh <(curl https://slscan.sh/install)
-      scan -t java,depscan -o $(Build.ArtifactStagingDirectory)/CodeAnalysisLogs
+      $HOME/.local/bin/scan -t java,depscan -o $(Build.ArtifactStagingDirectory)/CodeAnalysisLogs
   env:
     WORKSPACE: https://github.com/prabhu/struts2-rce/blob/$(Build.SourceVersion)
 
